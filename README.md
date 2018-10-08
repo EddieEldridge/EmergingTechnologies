@@ -4,7 +4,7 @@
   <b>A repository for the Emerging Technologies module's assignments. These assignments will be made with Python and Jupyter Notebook.</b><br>
 </p>
 
-## Contents
+# Contents
 * [Description](#description)
 * [How to run](#how-to-run-the-program)
 * [Design](https://github.com/Store-Compare-Project/StoreCompare/wiki/Design-Document)
@@ -15,28 +15,47 @@
 * [Resources](#resources)
 * [Wiki](https://github.com/EddieEldridge/GoLangAutomaton/wiki)
 
-## Description
+# Description
+This repository will consist of the following programs Python scripts and Jupyter notebooks.
 
-## How to run the program
+## 1. numpy random notebook
+A jupyter notebook explaining the concepts
+behind and the use of the numpy random package, including plots
+of the various distributions.
 
-## Information
+## 2. Iris dataset notebook
+ A jupyter notebook explaining the famous iris data set including the difficulty in writing an algorithm to separate the three classes of iris based on the variables in the dataset.
 
 
-## Documentation
+## 3. MNIST dataset notebook
+ A jupyter notebook explaining how to read the MNIST dataset efficiently into memory in Python.
 
-## Video
+## 4. Digit recognition script
+A Python script that takes an image file containing a handwritten digit and identifies the digit using a supervised learning algorithm and the MNIST dataset.
 
-## Technologies and Software
+## 5. Digit recognition notebook
+A jupyter notebook explaining how the above Python script works and discussing its performance.
+
+# How to run the program
+
+# Information
+
+
+# Documentation
+
+# Video
+
+# Technologies and Software
 **Technologies**
 
 **Software**
 
 
-## Resources
+# Resources
 
 
 
-## Developers
+# Developers
 [Eddie Eldridge](https://github.com/EddieEldridge)	
 
-## Acknowledgments
+# Acknowledgments
