@@ -1,4 +1,4 @@
-# EmergingTechnologiesAssignments
+ <h1><b>EmergingTechnologiesAssignments</b></h1>
 
 <p align="center">
   <b>A repository for the Emerging Technologies module's assignments. These assignments will be made with Python and Jupyter Notebook.</b><br>
