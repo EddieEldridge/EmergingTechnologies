@@ -10,8 +10,6 @@
 * [How to run](#how-to-run-the-program)
 * [Design](https://github.com/Store-Compare-Project/StoreCompare/wiki/Design-Document)
 * [Documentation](#documentation)
-* [Information](#information)
-* [Video](#video)
 * [Technologies](#technologies-and-software)
 * [Resources](#resources)
 * [Wiki](https://github.com/EddieEldridge/GoLangAutomaton/wiki)
@@ -55,26 +53,14 @@ Simply navigate to the folder your just downloaded/cloned and run the following 
 This will run a Juptyer notebook on your local machine. If nothing pops out, simply 
 enter `http://localhost:8888` in your browser's address bar and the notebook should appear.
 
-
-
-# Information
-
-
 # Documentation
-
-# Video
-
-# Technologies and Software
-**Technologies**
-
-**Software**
 
 
 # Resources
 
+# Technologies
 
 
 # Developers
 [Eddie Eldridge](https://github.com/EddieEldridge)	
 
-# Acknowledgments
