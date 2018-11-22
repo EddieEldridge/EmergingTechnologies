@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Home page
-@app.route("/")
+@app.route("/home")
 @app.route("/home", methods=['GET', 'POST'])
 def home():
     # Return our home.html file from our 'templates' folder
