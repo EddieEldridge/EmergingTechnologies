@@ -27,6 +27,8 @@ data/
 MANIFEST
 *.png
 MNIST-data/
+MNIST_data/
+tmp
 
 
 # PyInstaller
