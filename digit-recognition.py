@@ -20,8 +20,11 @@ import matplotlib.pyplot as plt
 from tensorflow.examples.tutorials.mnist import input_data
 
 def LinearClassifier():
+    print("\n Running Linear Classification....")
+
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
+    print("\n Loaded MNIST successfully....")
 
     # Shorten tf.contrib.learn to just 'learn'
     learn = tf.contrib.learn
@@ -31,12 +34,14 @@ def LinearClassifier():
 
     # Define trainLabels as the training set of labels from MNIST
     trainLabels = np.asarray(mnist.train.labels, dtype=np.int32)
+    print("\n Created training data....")
 
     # Define testData as the testing set of images from MNIST
     testData = mnist.test.images
 
     # Define testData as the testing set of images from MNIST
     testLabels = np.asarray(mnist.test.labels, dtype=np.int32)
+    print("\n Created test data....")
 
     # Create a variable called feature_columns
     # https://www.tensorflow.org/guide/feature_columns
@@ -45,11 +50,14 @@ def LinearClassifier():
     # Create our classifier using TensorFlow's LinearClassifier function
     # We give this classifier 10 classes as the there are 10 outputs for our dataset (0..9)
     linearClassifier = learn.LinearClassifier(feature_columns=feature_columns, n_classes=10)
+    print("\n Created classifier....")
 
     # Tell TensorFlow to fit the classifier with the training set and corresponding labels in batches of 100 and steps of 1000
     # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
     linearClassifier.fit(trainData, trainLabels, batch_size=100, steps=1000)
+    print("\n Fitted classifier....")
 
+    print("\n Evaluating accuracy....")
     # Evaluate the accuray of our classifier after using the fit function above
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     # Print the accuracy of our fit method as a percentage
@@ -57,20 +65,11 @@ def LinearClassifier():
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
         
 def DNNClassifier():
-    # Import numpy
-    import numpy as np
-
-    # Import tensorflow as tf
-    import tensorflow as tf
-
-    # Import matplotlib as plt
-    import matplotlib.pyplot as plt
-
-    # Import the mnist dataSet from TensorFlow
-    from tensorflow.examples.tutorials.mnist import input_data
+    print("\n Running Deep Neural Network Classification....")
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
+    print("\n Loaded MNIST successfully....")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def input(dataset):
@@ -80,6 +79,7 @@ def DNNClassifier():
     # Reshape the with a shape of 28x28 as this represents the pixel dimensions of our images
     # https://www.tensorflow.org/guide/feature_columns
     feature_columns = [tf.feature_column.numeric_column("mnistData", shape=[28, 28])]
+    print("\n Created and reshaped feature columns....")
 
     # Create our classifier using TensorFlow's DNNClassifier function
     # We give this classifier 10 classes as the there are 10 outputs for our dataset (0..9)
@@ -93,6 +93,7 @@ def DNNClassifier():
                         dropout=0.1,
                         model_dir="./tmp/mnist_model"
                         )
+    print("\n Created classifier....")
 
      # Combine the training data and labels into one variable
     trainingData = tf.estimator.inputs.numpy_input_fn(
@@ -102,6 +103,7 @@ def DNNClassifier():
             batch_size=100,
             shuffle=True
         )
+    print("\n Created training data....")
 
 
         # Combine the test images and test labels into one variable
@@ -111,10 +113,13 @@ def DNNClassifier():
             num_epochs=1,
             shuffle=False
         )
+    print("\n Created test data....")
 
     # Tell TensorFlow to train the classifier with the training set and corresponding labels in steps of 100
     # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
+    print("\n Training classifier....")
     dnnClassifier.train(input_fn=trainingData, steps=1000)
+    print("\n Classifier trained!")
 
     # Print the accuracy of our fit method as a percentage
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
@@ -136,10 +141,8 @@ while ans:
     """)
     ans=input("What would you like to do? ") 
     if ans=="1": 
-      print("\n Running Linear Classification....")
       LinearClassifier()
     elif ans=="2":
-      print("\n Running Deep Neural Network Classification....")
       DNNClassifier()
     elif ans=="3":
       print("\n Exiting...")
