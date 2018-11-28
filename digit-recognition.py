@@ -93,7 +93,7 @@ def DNNClassifier():
     print("\n Loaded MNIST successfully....")
 
     # Create a function to easily get our images and labels from the MNIST dataset
-    def input(dataset):
+    def dataInput(dataset):
         return dataset.images, dataset.labels.astype(np.int32)
 
     # Create a variable called feature_columns
@@ -118,8 +118,8 @@ def DNNClassifier():
 
      # Combine the training data and labels into one variable
     trainingData = tf.estimator.inputs.numpy_input_fn(
-            x={"mnistData": input(mnist.train)[0]},
-            y=input(mnist.train)[1],
+            x={"mnistData": dataInput(mnist.train)[0]},
+            y=dataInput(mnist.train)[1],
             num_epochs=None,
             batch_size=100,
             shuffle=True
@@ -129,8 +129,8 @@ def DNNClassifier():
 
         # Combine the test images and test labels into one variable
     testingData = tf.estimator.inputs.numpy_input_fn(
-            x={"mnistData": input(mnist.test)[0]},
-            y=input(mnist.test)[1],
+            x={"mnistData": dataInput(mnist.test)[0]},
+            y=dataInput(mnist.test)[1],
             num_epochs=1,
             shuffle=False
         )
@@ -156,22 +156,30 @@ def DNNClassifier():
     3.Exit
     """)
     
-    #dnnChoice=input('')
+    #float_formatter = lambda x: "%.2f" % x
+    #np.set_printoptions(formatter={'float_kind':float_formatter})
 
-    #if dnnChoice=='1':
+    dnnChoice=input('')
+
+    if dnnChoice=='1':
         # Prompt the user for the image they wish to test
-    imageNum = 10
-    #imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
+        imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
-    actual = input(mnist.test)[1][imageNum]
-    print("Actual: ", actual)
+        predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([trainingImages[imageNum]])}, shuffle=False))
+        for p in predictions:
+            probList = (p['probabilities'])
+            maxValue = max(probList)
+            print("---Prediction---")
+            print("  0    1    2    3    4    5    6    7    8    9")
+            roundedArray = np.round(probList, decimals=2)
+            print(probList)
+            print(roundedArray)
+            print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
 
-    predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([trainingImages[imageNum]])}, shuffle=False))
-    for p in predictions:
-        newList = (p['probabilities'])
-        print (newList.astype(np.int32))
-    #else:
-       #return
+        actual = dataInput(mnist.test)[1][imageNum]
+        print("Actual: ", actual)
+    else:
+        return
 
 
  
