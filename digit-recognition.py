@@ -1,8 +1,8 @@
 # Import os
 import os
 
-# Supress warnings but don't supress errors
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+# Supress warnings but not errors
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # Import numpy
 import numpy as np
@@ -16,7 +16,7 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 # Import matplotlib as plt
 import matplotlib.pyplot as plt
 
-# Import the mnist dataSet from TensorFlow
+# Import the MNIST dataSet from TensorFlow
 from tensorflow.examples.tutorials.mnist import input_data
 
 def LinearClassifier():
@@ -55,14 +55,43 @@ def LinearClassifier():
     # Tell TensorFlow to fit the classifier with the training set and corresponding labels in batches of 100 and steps of 1000
     # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
     linearClassifier.fit(trainData, trainLabels, batch_size=100, steps=1000)
-    print("\n Fitted classifier....")
+    print("\n Classifier trained!")
 
-    print("\n Evaluating accuracy....")
+    print("\n Evaluating accuracy!")
     # Evaluate the accuray of our classifier after using the fit function above
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     # Print the accuracy of our fit method as a percentage
     percentageAccuracy = (linearClassifier.evaluate(testData, testLabels)["accuracy"])
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
+    
+    print("\n Would you like to test a specific image with this classifier?")
+    print ("""
+    1.Yes
+    2.No
+    3.Exit
+    """)
+    choice=input('')
+    while choice=='1':
+
+        # Prompt the user for the image they wish to test
+        imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
+
+        # Make a prediction using Tensorflow and our classifier we created above from our testData
+        prediction = linearClassifier.predict(np.array([testData[imageNum]], dtype=float), as_iterable=False)
+
+        # Print our prediction and display the actual image we are trying to predict
+        print("Predicted: ", prediction)
+        print("Actual: ", testLabels[imageNum])
+
+        print("\n Would you like to test a specific image with this classifier?")
+        print ("""
+        1.Yes
+        2.No
+        3.Exit
+        """)
+
+    else:
+        return
         
 def DNNClassifier():
     print("\n Running Deep Neural Network Classification....")
@@ -124,20 +153,15 @@ def DNNClassifier():
     # Print the accuracy of our fit method as a percentage
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
-    print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))  
-
-def displayImage(i, testData, testLabels):
-    img = testData[i]
-    plt.title('Image: %d Label: %d' % (i, testLabels[i]))
-    plt.imshow(img.reshape(28,28), cmap="grey")
-
+    print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
 
 ans=True
 while ans:
     print ("""
+    ==== MNIST DATASET ====
     1.Run Linear Classification of MNIST
     2.Run Deep Neural Network Classification of MNIST
-    3.Exit/Quit
+    3.Exit
     """)
     ans=input("What would you like to do? ") 
     if ans=="1": 
@@ -146,7 +170,7 @@ while ans:
       DNNClassifier()
     elif ans=="3":
       print("\n Exiting...")
-      quit 
+      exit()
     elif ans !="":
       print("\n Not Valid Choice Try again") 
 
