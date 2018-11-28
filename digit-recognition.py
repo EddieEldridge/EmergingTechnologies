@@ -146,7 +146,7 @@ def DNNClassifier():
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
-
+    
     print("\n Would you like to test a specific image with this classifier?")
     print ("""
     1.Yes
@@ -158,17 +158,17 @@ def DNNClassifier():
     #if choice=='1':
         # Prompt the user for the image they wish to test
         #imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
-    imageNum =44
-    print("Making prediction....")
-    # Make a prediction using Tensorflow and our classifier we created above from our testData
-    prediction = dnnClassifier.predict(np.array([input(mnist.train)[imageNum]], dtype=float))
-    print("Making actual....")
-    actual = input(mnist.train)[imageNum]
-    # Print our prediction and display the actual image we are trying to predict
-    print("Predicted: ", prediction)
+    imageNum =55
+
+    actual = input(mnist.test)[1][imageNum]
     print("Actual: ", actual)
-   # else:
-     #   return
+    
+    prediction = dnnClassifier.predict((input(mnist.test)[0][imageNum]))
+    
+    print(list(prediction))
+
+    
+ 
 ans=True
 while ans:
     print ("""
