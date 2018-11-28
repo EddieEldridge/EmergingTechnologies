@@ -169,10 +169,12 @@ def DNNClassifier():
         for p in predictions:
             probList = (p['probabilities'])
             maxValue = max(probList)
-            print("---Prediction---")
-            print("  0    1    2    3    4    5    6    7    8    9")
             roundedArray = np.round(probList, decimals=2)
-            print(roundedArray)
+
+            print("\n------------Prediction------------\n")
+            for i in range(0,10):
+                print ("Prediction of %i: %.3f" % (i,roundedArray[i]))           
+            
             print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
 
         actual = dataInput(mnist.train)[1][imageNum]
