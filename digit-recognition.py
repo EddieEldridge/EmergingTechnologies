@@ -142,6 +142,8 @@ def DNNClassifier():
     dnnClassifier.train(input_fn=trainingData, steps=1000)
     print("\n Classifier trained!")
 
+    trainingImages = mnist.train.images  # Returns np.array
+
     # Print the accuracy of our fit method as a percentage
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
@@ -153,21 +155,25 @@ def DNNClassifier():
     2.No
     3.Exit
     """)
-    #choice=input('')
     
-    #if choice=='1':
+    #dnnChoice=input('')
+
+    #if dnnChoice=='1':
         # Prompt the user for the image they wish to test
-        #imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
-    imageNum =55
+    imageNum = 10
+    #imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
     actual = input(mnist.test)[1][imageNum]
     print("Actual: ", actual)
-    
-    prediction = dnnClassifier.predict((input(mnist.test)[0][imageNum]))
-    
-    print(list(prediction))
 
-    
+    predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([trainingImages[imageNum]])}, shuffle=False))
+    for p in predictions:
+        newList = (p['probabilities'])
+        print (newList.astype(np.int32))
+    #else:
+       #return
+
+
  
 ans=True
 while ans:
