@@ -71,8 +71,8 @@ def LinearClassifier():
     3.Exit
     """)
     choice=input('')
-    while choice=='1':
 
+    if choice=='1':
         # Prompt the user for the image they wish to test
         imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
@@ -82,14 +82,6 @@ def LinearClassifier():
         # Print our prediction and display the actual image we are trying to predict
         print("Predicted: ", prediction)
         print("Actual: ", testLabels[imageNum])
-
-        print("\n Would you like to test a specific image with this classifier?")
-        print ("""
-        1.Yes
-        2.No
-        3.Exit
-        """)
-
     else:
         return
         
@@ -155,6 +147,28 @@ def DNNClassifier():
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
 
+    print("\n Would you like to test a specific image with this classifier?")
+    print ("""
+    1.Yes
+    2.No
+    3.Exit
+    """)
+    #choice=input('')
+    
+    #if choice=='1':
+        # Prompt the user for the image they wish to test
+        #imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
+    imageNum =44
+    print("Making prediction....")
+    # Make a prediction using Tensorflow and our classifier we created above from our testData
+    prediction = dnnClassifier.predict(np.array([input(mnist.train)[imageNum]], dtype=float))
+    print("Making actual....")
+    actual = input(mnist.train)[imageNum]
+    # Print our prediction and display the actual image we are trying to predict
+    print("Predicted: ", prediction)
+    print("Actual: ", actual)
+   # else:
+     #   return
 ans=True
 while ans:
     print ("""
