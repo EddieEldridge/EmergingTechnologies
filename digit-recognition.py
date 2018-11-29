@@ -68,7 +68,6 @@ def LinearClassifier():
     print ("""
     1.Yes
     2.No
-    3.Exit
     """)
     choice=input('')
 
@@ -86,7 +85,7 @@ def LinearClassifier():
         return
         
 def DNNClassifier():
-    print("\n Running Deep Neural Network Classification....")
+    print("\nRunning Deep Neural Network Classification....\n")
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
@@ -142,7 +141,7 @@ def DNNClassifier():
     dnnClassifier.train(input_fn=trainingData, steps=1000)
     print("\n Classifier trained!")
 
-    trainingImages = mnist.train.images  # Returns np.array
+    testingImages = mnist.test.images 
 
     # Print the accuracy of our fit method as a percentage
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
@@ -153,19 +152,16 @@ def DNNClassifier():
     print ("""
     1.Yes
     2.No
-    3.Exit
     """)
     
-    #float_formatter = lambda x: "%.2f" % x
-    #np.set_printoptions(formatter={'float_kind':float_formatter})
-
     dnnChoice=input('')
 
-    if dnnChoice=='1':
+    while dnnChoice=='1':
         # Prompt the user for the image they wish to test
         imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
-        predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([trainingImages[imageNum]])}, shuffle=False))
+        ## 
+        predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([testingImages[imageNum]])}, shuffle=False))
         for p in predictions:
             probList = (p['probabilities'])
             maxValue = max(probList)
@@ -177,10 +173,17 @@ def DNNClassifier():
             
             print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
 
-        actual = dataInput(mnist.train)[1][imageNum]
+        actual = dataInput(mnist.test)[1][imageNum]
         print("Actual: ", actual)
-    else:
-        return
+        print("\n------------------------------------\n")
+        print("\n Would you like to test a specific image with this classifier?")
+        print ("""
+            1.Yes
+            2.No
+            """)
+        dnnChoice=input('')
+
+    
 
 
  
