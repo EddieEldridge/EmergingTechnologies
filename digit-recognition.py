@@ -54,7 +54,7 @@ def LinearClassifier():
 
     # Tell TensorFlow to fit the classifier with the training set and corresponding labels in batches of 100 and steps of 1000
     # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
-    linearClassifier.fit(trainData, trainLabels, batch_size=100, steps=1000)
+    linearClassifier.fit(trainData, trainLabels, epochs=3, batch_size=100, steps=1000)
     print("\n Classifier trained!")
 
     print("\n Evaluating accuracy!")
@@ -179,6 +179,8 @@ def DNNClassifier():
             # Get the max value i.e the predicted digit from our list of probabilites
             maxValue = max(probList)
 
+            # Print the predicted value to the screen
+            predictedValue = probList.argmax(axis=0)
             # Round the array of probabilities to 2 decimal palces for easier reading
             roundedArray = np.round(probList, decimals=2)
 
@@ -188,6 +190,7 @@ def DNNClassifier():
                 print ("Prediction of %i: %.3f" % (i,roundedArray[i]))           
             
             print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
+            print("Predicted Value: ", predictedValue)
 
         # Get the numbers actual value from labels in the test set of images
         actual = dataInput(mnist.test)[1][imageNum]
