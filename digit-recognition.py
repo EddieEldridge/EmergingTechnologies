@@ -26,7 +26,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def LinearClassifier():
-    print("\n Running Linear Classification....\n")
+    print("\nRunning Linear Classification....\n")
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
@@ -151,7 +151,7 @@ def DNNClassifier():
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
-    print("\nLoaded MNIST successfully....\n")
+    print("\nLoaded MNIST successfully....")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -267,7 +267,7 @@ def DNNClassifier():
             """)
         dnnChoice=input('')
 
-    
+# Function for saving images from MNIST Test set
 def ImageSaver():
     # Prompt user for number of images they wish to load
     print("\n Define the range of images you would like to unzip - Range1:Range2 - 1-10000")
