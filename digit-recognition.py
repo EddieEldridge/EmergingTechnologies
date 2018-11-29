@@ -83,7 +83,8 @@ def LinearClassifier():
         print("Actual: ", testLabels[imageNum])
     else:
         return
-        
+
+# Function for running our DNN Classification of MNIST      
 def DNNClassifier():
     print("\nRunning Deep Neural Network Classification....\n")
 
@@ -126,7 +127,7 @@ def DNNClassifier():
     print("\n Created training data....")
 
 
-        # Combine the test images and test labels into one variable
+    # Combine the test images and test labels into one variable
     testingData = tf.estimator.inputs.numpy_input_fn(
             x={"mnistData": dataInput(mnist.test)[0]},
             y=dataInput(mnist.test)[1],
@@ -148,34 +149,49 @@ def DNNClassifier():
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
     
+    # Print menu
     print("\n Would you like to test a specific image with this classifier?")
     print ("""
     1.Yes
     2.No
     """)
     
+    # Take input for the above
     dnnChoice=input('')
 
+    # Keep menu open while the user wants to test a specific image
     while dnnChoice=='1':
         # Prompt the user for the image they wish to test
         imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
-        ## 
+        ## Assign our prediction to a generator object called predictions, passing it in a specific image from our testing array of images
+        ## Set shuffle to false to ensure we get the right image 
         predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([testingImages[imageNum]])}, shuffle=False))
+
+        # Loop through every element of our prediction object
         for p in predictions:
+            # Extract just the probability variables from predictions
             probList = (p['probabilities'])
+            
+            # Get the max value i.e the predicted digit from our list of probabilites
             maxValue = max(probList)
+
+            # Round the array of probabilities to 2 decimal palces for easier reading
             roundedArray = np.round(probList, decimals=2)
 
+            # Print our predictions
             print("\n------------Prediction------------\n")
             for i in range(0,10):
                 print ("Prediction of %i: %.3f" % (i,roundedArray[i]))           
             
             print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
 
+        # Get the numbers actual value from labels in the test set of images
         actual = dataInput(mnist.test)[1][imageNum]
         print("Actual: ", actual)
         print("\n------------------------------------\n")
+
+        # Prompt the user if they would like to try another image
         print("\n Would you like to test a specific image with this classifier?")
         print ("""
             1.Yes
@@ -186,7 +202,7 @@ def DNNClassifier():
     
 
 
- 
+# Basic menu
 ans=True
 while ans:
     print ("""
