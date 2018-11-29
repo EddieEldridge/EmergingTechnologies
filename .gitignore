@@ -28,6 +28,7 @@ MANIFEST
 *.png
 MNIST-data/
 MNIST_data/
+MNIST_images/
 tmp
 
 
