@@ -26,11 +26,11 @@ from tensorflow.examples.tutorials.mnist import input_data
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def LinearClassifier():
-    print("\n Running Linear Classification....")
+    print("\n Running Linear Classification....\n")
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
-    print("\n Loaded MNIST successfully....")
+    print("\nLoaded MNIST successfully....\n")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -151,7 +151,7 @@ def DNNClassifier():
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
-    print("\nLoaded MNIST successfully....")
+    print("\nLoaded MNIST successfully....\n")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -268,9 +268,9 @@ def DNNClassifier():
         dnnChoice=input('')
 
     
-def fileManager():
+def ImageSaver():
     # Prompt user for number of images they wish to load
-    print("\n Define the range of images you would like to unzip")
+    print("\n Define the range of images you would like to unzip - Range1:Range2 - 1-10000")
 
     # Get the range from the user
     range1=int(input("\nRange 1: "))
@@ -283,13 +283,9 @@ def fileManager():
     statingPointImages1=(range1*784)+16
     statingPointImages2=statingPointImages1+784
 
+    # Define the starting point for the labels
     statingPointLabels1=range1+8
     statingPointLabels2=statingPointLabels1+1
-
-    print(statingPointImages1)
-    print(statingPointImages2)
-    print(statingPointLabels1)
-    print(statingPointLabels2)
     
     try:
         # Using gzip we just imported, open the zip files contained in our data folder
@@ -318,23 +314,24 @@ def fileManager():
             image = ~np.array(list(image_contents[statingPointImages1:statingPointImages2])).reshape(28,28).astype(np.uint8)
             label = np.array(list(labels_contents[statingPointLabels1:statingPointLabels2])).astype(np.uint8)
             
-            # Each byte corresponds to a 1 label so increment by 1
-            statingPointLabels1+=1
-            statingPointLabels2+=1
-            
             # Every 784 bytes corresponds to a 1 image so increment by 784
             statingPointImages1+=784
             statingPointImages2+=784
-            
+
+            # Each byte corresponds to a 1 label so increment by 1
+            statingPointLabels1+=1
+            statingPointLabels2+=1
+        
             # Save the images with the following format
             # E.G train-(0)_[7]
             # This means the image is from the test set, is the first image in the set and the drawn image is a 7
-            cv2.imwrite('test-' + str(label) + '.png', image)
+            cv2.imwrite('test-(' + str((statingPointLabels1)-9) + ')' + str(label) + '.png', image)
 
     print("\nYou have successfully unzipped "+str(numImages)+" images to 'MNIST_images'.\n")
     return
 
-def downloadDataset():
+# Function to download the MNIST dataset
+def DownloadDataset():
     print("\nDownloading dataset...")
      # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
@@ -353,9 +350,9 @@ while ans:
     """)
     ans=input("What would you like to do? ") 
     if ans=="1": 
-      downloadDataset()
+      DownloadDataset()
     elif ans=="2":
-      fileManager()
+      ImageSaver()
     elif ans=="3":
       LinearClassifier()
     elif ans=="4":
