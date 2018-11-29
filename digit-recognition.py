@@ -58,7 +58,7 @@ def LinearClassifier():
     print("\n Classifier trained!")
 
     print("\n Evaluating accuracy!")
-    # Evaluate the accuray of our classifier after using the fit function above
+    # Evaluate the accuracy of our classifier after using the fit function above
     # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
     # Print the accuracy of our fit method as a percentage
     percentageAccuracy = (linearClassifier.evaluate(testData, testLabels)["accuracy"])
@@ -117,6 +117,7 @@ def DNNClassifier():
     print("\n Created classifier....")
 
      # Combine the training data and labels into one variable
+     # https://www.tensorflow.org/api_docs/python/tf/estimator/inputs/numpy_input_fn
     trainingData = tf.estimator.inputs.numpy_input_fn(
             x={"mnistData": dataInput(mnist.train)[0]},
             y=dataInput(mnist.train)[1],
@@ -128,6 +129,7 @@ def DNNClassifier():
 
 
     # Combine the test images and test labels into one variable
+    # https://www.tensorflow.org/api_docs/python/tf/estimator/inputs/numpy_input_fn
     testingData = tf.estimator.inputs.numpy_input_fn(
             x={"mnistData": dataInput(mnist.test)[0]},
             y=dataInput(mnist.test)[1],
@@ -137,7 +139,7 @@ def DNNClassifier():
     print("\n Created test data....")
 
     # Tell TensorFlow to train the classifier with the training set and corresponding labels in steps of 100
-    # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
+    # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#train
     print("\n Training classifier....")
     dnnClassifier.train(input_fn=trainingData, steps=1000)
     print("\n Classifier trained!")
@@ -164,8 +166,9 @@ def DNNClassifier():
         # Prompt the user for the image they wish to test
         imageNum=int(input("\n Please choose an image to test as an integer (1-10000): "))
 
-        ## Assign our prediction to a generator object called predictions, passing it in a specific image from our testing array of images
-        ## Set shuffle to false to ensure we get the right image 
+        # Assign our prediction to a generator object called predictions, passing it in a specific image from our testing array of images
+        # Set shuffle to false to ensure we get the right image 
+        # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#predict
         predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([testingImages[imageNum]])}, shuffle=False))
 
         # Loop through every element of our prediction object
