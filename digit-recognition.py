@@ -1,8 +1,11 @@
 # Import os
 import os
 
-# Supress warnings but not errors
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# Import gzip to unzip our files
+import gzip
+
+# Import cv2 to save the images
+import cv2
 
 # Import numpy
 import numpy as np
@@ -18,6 +21,9 @@ import matplotlib.pyplot as plt
 
 # Import the MNIST dataSet from TensorFlow
 from tensorflow.examples.tutorials.mnist import input_data
+
+# Supress warnings but not errors
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 def LinearClassifier():
     print("\n Running Linear Classification....")
@@ -199,6 +205,7 @@ def DNNClassifier():
     dnnClassifier.train(input_fn=trainingData, steps=1000)
     print("\nClassifier trained!")
 
+     # Assign the images from the MNIST Test set to a variable called testingImagees
     testingImages = mnist.test.images 
 
     # Print the accuracy of our fit method as a percentage
@@ -261,23 +268,90 @@ def DNNClassifier():
         dnnChoice=input('')
 
     
+def fileManager():
+    # Prompt user for number of images they wish to load
+    numImages=int(input("\n How many images would you like to unzip and save from the test set: "))
 
+    # Variables for Training Image Set
+    trainImagesBytes1=16
+    trainImagesBytes2=800
+
+    # Variables for Training Labels Set
+    trainLabelsBytes1=8
+    trainLabelsBytes2=9
+
+    try:
+        # Using gzip we just imported, open the zip files contained in our data folder
+        with gzip.open('MNIST_data/t10k-images-idx3-ubyte.gz', 'rb') as file_images:
+            image_contents = file_images.read()
+            
+        # Using gzip we just imported, open the zip files contained in our data folder
+        with gzip.open('MNIST_data/t10k-labels-idx1-ubyte.gz', 'rb') as file_labels:
+            labels_contents = file_labels.read()
+    except:
+        print("Please download the files first by using the appropriate function.")
+        return
+
+    # Create a directory to store our MNIST images
+    dirName='MNIST_images'
+
+    # Check to see if the directory exists before trying to make it
+    if(os.path.isdir(dirName)==False):
+        os.mkdir(dirName)
+        os.chdir(dirName)        
+    else:
+        os.chdir(dirName)        
+
+    # Loop through the images assigning a corresponding label of the the drawn number
+    for x in range(numImages):
+            image = ~np.array(list(image_contents[trainImagesBytes1:trainImagesBytes2])).reshape(28,28).astype(np.uint8)
+            labels = np.array(list(labels_contents[trainLabelsBytes1:trainLabelsBytes2])).astype(np.uint8)
+            
+            # Each byte corresponds to a 1 label so increment by 1
+            trainLabelsBytes1+=1
+            trainLabelsBytes2+=1
+            
+            # Every 784 bytes corresponds to a 1 image so increment by 784
+            trainImagesBytes1+=784
+            trainImagesBytes2+=784
+            
+            
+
+            # Save the images with the following format
+            # E.G train-(0)_[7]
+            # This means the image is from the training set, is the first image in the set and the drawn image is a 7
+            cv2.imwrite('train-(' + str(x) + ')' + '_' + str(labels) + '.png', image)
+
+    print("\nYou have successfully unzipped the first "+str(numImages)+" images to 'MNIST_images'.\n")
+    return
+
+def downloadDataset():
+    print("Downloading dataset...")
+     # Load the mnist dataset from TensorFlow
+    mnist = input_data.read_data_sets("MNIST_data")
+    print("Dataset downloaded as 'MNIST_data'!")
 
 # Basic menu
 ans=True
 while ans:
     print ("""
-    ==== MNIST DATASET ====
-    1.Run Linear Classification of MNIST
-    2.Run Deep Neural Network Classification of MNIST
-    3.Exit
+    ============ MNIST DATASET ============
+    1. Download MNIST dataset via TensorFlow
+    2. Unzip and save images from MNIST test set
+    3. Run Linear Classification of MNIST dataset
+    4. Run Deep Neural Network Classification of MNIST dataset
+    5. Exit
     """)
     ans=input("What would you like to do? ") 
     if ans=="1": 
-      LinearClassifier()
+      downloadDataset()
     elif ans=="2":
-      DNNClassifier()
+      fileManager()
     elif ans=="3":
+      LinearClassifier()
+    elif ans=="4":
+      DNNClassifier()
+    elif ans=="5":
       print("\n Exiting...")
       exit()
     elif ans !="":
