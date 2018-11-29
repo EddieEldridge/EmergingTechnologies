@@ -270,16 +270,27 @@ def DNNClassifier():
     
 def fileManager():
     # Prompt user for number of images they wish to load
-    numImages=int(input("\n How many images would you like to unzip and save from the test set: "))
+    print("\n Define the range of images you would like to unzip")
 
-    # Variables for Training Image Set
-    trainImagesBytes1=16
-    trainImagesBytes2=800
+    # Get the range from the user
+    range1=int(input("\nRange 1: "))
+    range2=int(input("\nRange 2: "))
 
-    # Variables for Training Labels Set
-    trainLabelsBytes1=8
-    trainLabelsBytes2=9
+    # Get the number of images
+    numImages = range2-range1
 
+    # Define the starting point for the image
+    statingPointImages1=(range1*784)+16
+    statingPointImages2=statingPointImages1+784
+
+    statingPointLabels1=range1+8
+    statingPointLabels2=statingPointLabels1+1
+
+    print(statingPointImages1)
+    print(statingPointImages2)
+    print(statingPointLabels1)
+    print(statingPointLabels2)
+    
     try:
         # Using gzip we just imported, open the zip files contained in our data folder
         with gzip.open('MNIST_data/t10k-images-idx3-ubyte.gz', 'rb') as file_images:
@@ -289,7 +300,7 @@ def fileManager():
         with gzip.open('MNIST_data/t10k-labels-idx1-ubyte.gz', 'rb') as file_labels:
             labels_contents = file_labels.read()
     except:
-        print("Please download the files first by using the appropriate function.")
+        print("\nPlease download the files first by using the appropriate function.")
         return
 
     # Create a directory to store our MNIST images
@@ -304,32 +315,30 @@ def fileManager():
 
     # Loop through the images assigning a corresponding label of the the drawn number
     for x in range(numImages):
-            image = ~np.array(list(image_contents[trainImagesBytes1:trainImagesBytes2])).reshape(28,28).astype(np.uint8)
-            labels = np.array(list(labels_contents[trainLabelsBytes1:trainLabelsBytes2])).astype(np.uint8)
+            image = ~np.array(list(image_contents[statingPointImages1:statingPointImages2])).reshape(28,28).astype(np.uint8)
+            label = np.array(list(labels_contents[statingPointLabels1:statingPointLabels2])).astype(np.uint8)
             
             # Each byte corresponds to a 1 label so increment by 1
-            trainLabelsBytes1+=1
-            trainLabelsBytes2+=1
+            statingPointLabels1+=1
+            statingPointLabels2+=1
             
             # Every 784 bytes corresponds to a 1 image so increment by 784
-            trainImagesBytes1+=784
-            trainImagesBytes2+=784
+            statingPointImages1+=784
+            statingPointImages2+=784
             
-            
-
             # Save the images with the following format
             # E.G train-(0)_[7]
-            # This means the image is from the training set, is the first image in the set and the drawn image is a 7
-            cv2.imwrite('train-(' + str(x) + ')' + '_' + str(labels) + '.png', image)
+            # This means the image is from the test set, is the first image in the set and the drawn image is a 7
+            cv2.imwrite('test-' + str(label) + '.png', image)
 
-    print("\nYou have successfully unzipped the first "+str(numImages)+" images to 'MNIST_images'.\n")
+    print("\nYou have successfully unzipped "+str(numImages)+" images to 'MNIST_images'.\n")
     return
 
 def downloadDataset():
-    print("Downloading dataset...")
+    print("\nDownloading dataset...")
      # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
-    print("Dataset downloaded as 'MNIST_data'!")
+    print("\nDataset downloaded as 'MNIST_data'!\n")
 
 # Basic menu
 ans=True
