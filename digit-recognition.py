@@ -54,7 +54,7 @@ def LinearClassifier():
 
     # Tell TensorFlow to fit the classifier with the training set and corresponding labels in batches of 100 and steps of 1000
     # https://www.tensorflow.org/api_docs/python/tf/keras/models/Model#fit
-    linearClassifier.fit(trainData, trainLabels, epochs=3, batch_size=100, steps=1000)
+    linearClassifier.fit(trainData, trainLabels, batch_size=100, steps=1000)
     print("\n Classifier trained!")
 
     print("\n Evaluating accuracy!")
@@ -147,7 +147,7 @@ def DNNClassifier():
     testingImages = mnist.test.images 
 
     # Print the accuracy of our fit method as a percentage
-    # https://www.tensorflow.org/api_docs/python/tf/contrib/learn/evaluate
+    # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#evaluate
     percentageAccuracy = (dnnClassifier.evaluate(input_fn=testingData)["accuracy"])
     print("\nTest Accuracy: {0:f}%\n".format(percentageAccuracy*100))
     
@@ -190,7 +190,7 @@ def DNNClassifier():
                 print ("Prediction of %i: %.3f" % (i,roundedArray[i]))           
             
             print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
-            print("Predicted Value: ", predictedValue)
+            print("Predicted: ", predictedValue)
 
         # Get the numbers actual value from labels in the test set of images
         actual = dataInput(mnist.test)[1][imageNum]
