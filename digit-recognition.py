@@ -31,12 +31,12 @@ def LinearClassifier():
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
 
-    # Check to see if the dataset was found correctly
-    if(mnist!=null):
-        print("\nLoaded MNIST successfully....\n")
-    else:
+   # Check to see if the dataset was found correctly
+    if(mnist is None):
         print("Please download the dataset first.")
         return
+    else:
+        print("\nLoaded MNIST successfully....\n")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -157,13 +157,13 @@ def DNNClassifier():
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
-    
+
     # Check to see if the dataset was found correctly
-    if(mnist!=null):
-        print("\nLoaded MNIST successfully....\n")
-    else:
+    if(mnist is None):
         print("Please download the dataset first.")
         return
+    else:
+        print("\nLoaded MNIST successfully....\n")
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -342,12 +342,60 @@ def ImageSaver():
     print("\nYou have successfully unzipped "+str(numImages)+" images to 'MNIST_images'.\n")
     return
 
+# Function to format and predict a given image
+def PredictImage():
+
+    # Prompt user for number of images they wish to load
+    predChoice = int(input("\n Please provide the image you wish to test: "))
+
+    # First check to make sure the file exists
+    image = cv2.open("MNIST_images/"+predChoice)
+
+    if(image is None):
+        print("Image not found.")
+        return
+    else:
+        print("\nLoaded image successfully....\n")
+
+    # Process the image to conform to MNIST format
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = cv2.resize(image, (28, 28), interpolation=cv2.INTER_AREA)
+    image = cv2.bitwise_not(image)
+    image = image.reshape(1, 784)
+    image = image.astype('float32')
+    image /= 255
+
+    # Create a variable called feature_columns
+    # Reshape the with a shape of 28x28 as this represents the pixel dimensions of our images
+    # https://www.tensorflow.org/guide/feature_columns
+    feature_columns = [tf.feature_column.numeric_column("mnistData", shape=[28, 28])]
+    print("\nCreated and reshaped feature columns....")
+
+    # Load our estimator we already generated from before
+    # Create our classifier using TensorFlow's DNNClassifier function
+    # We give this classifier 10 classes as the there are 10 outputs for our dataset (0..9)
+    # I'll discuss this in more detail in the next notebook
+    # https://www.tensorflow.org/api_docs/python/tf/estimator/DNNClassifier
+    dnnClassifier = tf.estimator.DNNClassifier(
+                        feature_columns=feature_columns,
+                        hidden_units=[256, 32],
+                        optimizer=tf.train.AdamOptimizer(1e-4),
+                        n_classes=10,
+                        dropout=0.1,
+                        model_dir="./tmp/mnist_model"
+                        )
+    print("\nCreated classifier....")
+
+    prediction = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x=userImage, shuffle=False))
+
+    
 # Function to download the MNIST dataset
 def DownloadDataset():
     print("\nDownloading dataset...")
      # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
     print("\nDataset downloaded as 'MNIST_data'!\n")
+
 
 # Basic menu
 ans=True
