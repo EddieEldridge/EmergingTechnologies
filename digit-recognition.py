@@ -119,7 +119,6 @@ def LinearClassifier():
         # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#predict
         predictions = linearClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"mnistData": np.array([testingImages[imageNum]])}, shuffle=False))
 
-
         # Loop through every element of our prediction object
         for p in predictions:
             # Extract just the probability variables from predictions
@@ -349,12 +348,12 @@ def ImageSaver():
 def PredictImage():
 
     # Prompt user for number of images they wish to load
-    predChoice = int(input("\n Please provide the image you wish to test from the MNIST_Images folder: "))
+    predChoice = str(input("\n Please provide the image you wish to test from the MNIST_Images folder: "))
 
     # First check to make sure the file exists
-    imageToTest = cv2.open("MNIST_images/"+predChoice)
+    imageToTest = cv2.imread("MNIST_images/"+predChoice)
 
-    if(image is None):
+    if(imageToTest is None):
         print("Image not found.")
         return
     else:
@@ -371,7 +370,7 @@ def PredictImage():
     # Create a variable called feature_columns
     # Reshape the with a shape of 28x28 as this represents the pixel dimensions of our images
     # https://www.tensorflow.org/guide/feature_columns
-    feature_columns = [tf.feature_column.numeric_column("mnistData", shape=[28, 28])]
+    feature_columns = [tf.feature_column.numeric_column("imageToTest", shape=[28, 28])]
     print("\nCreated and reshaped feature columns....")
 
     # Load our estimator we already generated from before
@@ -392,13 +391,14 @@ def PredictImage():
     # Assign our prediction to a generator object called predictions, passing it in a specific image from our testing array of images
     # Set shuffle to false to ensure we get the right image 
     # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#predict
-    predictions = dnnClassifier.predict(input_fn=imageToTest, shuffle=False)
+    predictions = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x={"imageToTest": np.array(imageToTest)}, shuffle=False))
+    print("\n Made prediction...")
 
     # Loop through every element of our prediction object
     for p in predictions:
         # Extract just the probability variables from predictions
         probList = (p['probabilities'])
-        
+        print(probList)
         # Get the max value i.e the predicted digit from our list of probabilites
         maxValue = max(probList)
 
