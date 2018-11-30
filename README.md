@@ -50,14 +50,60 @@ Simply navigate to the folder your just downloaded/cloned and run the following 
 
 `jupyter notebook`
 
-This will run a Juptyer notebook on your local machine. If nothing pops out, simply 
-enter `http://localhost:8888` in your browser's address bar and the notebook should appear.
+This will run a Juptyer notebook on your local machine in your default web browser.
 
-# Documentation
-
+[Troubleshooting Juptyer Notebook](https://jupyter-notebook.readthedocs.io/en/stable/troubleshooting.html)
 
 # Resources
+The following is a collection of all the resources I used to develop and write these notebooks/scripts.
 
+* [What The Distribution Tells You About A Data Set](https://www.dummies.com/education/math/statistics/what-the-distribution-tells-you-about-a-statistical-data-set/)
+
+* [Visualizing the distribtuion of a dataset](https://seaborn.pydata.org/tutorial/distributions.html)
+
+* [Seaborn distplot](https://seaborn.pydata.org/generated/seaborn.distplot.html#seaborn.distplot)
+
+* [How Computers Generate Random Numbers](https://www.howtogeek.com/183051/htg-explains-how-computers-generate-random-numbers/)
+
+* [numpy.random package documentation](https://docs.scipy.org/doc/numpy-1.15.1/reference/routines.random.html)
+
+* [Iris data set information](https://archive.ics.uci.edu/ml/datasets/iris)
+
+* [Machine Learning with the Iris dataset](https://www.kaggle.com/jchen2186/machine-learning-with-iris-dataset)
+
+* [Visualized Iris data set CSV file](https://www.kaggle.com/uciml/iris#Iris.csv)
+
+* [Multi-Class Classification Tutorial with the Keras Deep Learning Library](https://machinelearningmastery.com/multi-class-classification-tutorial-keras-deep-learning-library/)
+
+* [Steps in Machine Learning](https://towardsdatascience.com/machine-learning-in-practice-what-are-the-steps-a4b15ee18546?gi=c7ae60c87a44)
+
+* [Getting started in scikit-learn with the famous iris dataset](https://www.youtube.com/watch?v=hd1W4CyPX58)
+
+* [Training a machine learning model with scikit-learn](https://www.youtube.com/watch?v=RlQuVL6-qe8)
+
+* [KA Quick Introduction to K-Nearest Neighbors Algorithm](https://medium.com/@adi.bronshtein/a-quick-introduction-to-k-nearest-neighbors-algorithm-62214cea29c7)
+
+* [Reading integers from bytes in Python](https://stackoverflow.com/questions/1163459/reading-integers-from-binary-file-in-python)
+
+* [MNIST Website](http://yann.lecun.com/exdb/mnist/)
+
+* [Handling the MNIST Datset](https://github.com/datapythonista/mnist)
+
+* [Writing images using OpenCV](https://docs.opencv.org/2.4/doc/tutorials/introduction/load_save_image/load_save_image.html)
+
+* [Classifying Handwritten Digits with TF.Learn - Machine Learning Recipes](https://www.youtube.com/watch?v=Gj0iyo265bc)
+
+* [Handling the MNIST Datset](https://github.com/datapythonista/mnist)
+
+* [Writing images using OpenCV](https://docs.opencv.org/2.4/doc/tutorials/introduction/load_save_image/load_save_image.html)
+
+* [Classifying the MNIST Dataset using a DNN](https://codeburst.io/use-tensorflow-dnnclassifier-estimator-to-classify-mnist-dataset-a7222bf9f940)
+
+* [What is the difference between a neural network and a deep neural network, and why do the deep ones work better?](https://stats.stackexchange.com/questions/182734/what-is-the-difference-between-a-neural-network-and-a-deep-neural-network-and-w)
+
+* [TensorFlow Optimizer Documentation](https://www.tensorflow.org/api_docs/python/tf/train/Optimizer)
+
+* [How to pick an optimizer and learning rate for a model](https://medium.com/octavian-ai/which-optimizer-and-learning-rate-should-i-use-for-deep-learning-5acb418f9b2)
 # Technologies
 
 
