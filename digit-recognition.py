@@ -7,6 +7,9 @@ import gzip
 # Import cv2 to save the images
 import cv2
 
+# Import PIL to help with image management
+from PIL import Image
+
 # Import numpy
 import numpy as np
 
@@ -346,10 +349,10 @@ def ImageSaver():
 def PredictImage():
 
     # Prompt user for number of images they wish to load
-    predChoice = int(input("\n Please provide the image you wish to test: "))
+    predChoice = int(input("\n Please provide the image you wish to test from the MNIST_Images folder: "))
 
     # First check to make sure the file exists
-    image = cv2.open("MNIST_images/"+predChoice)
+    imageToTest = cv2.open("MNIST_images/"+predChoice)
 
     if(image is None):
         print("Image not found.")
@@ -358,12 +361,12 @@ def PredictImage():
         print("\nLoaded image successfully....\n")
 
     # Process the image to conform to MNIST format
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    image = cv2.resize(image, (28, 28), interpolation=cv2.INTER_AREA)
-    image = cv2.bitwise_not(image)
-    image = image.reshape(1, 784)
-    image = image.astype('float32')
-    image /= 255
+    imageToTest = cv2.cvtColor(imageToTest, cv2.COLOR_BGR2GRAY)
+    imageToTest = cv2.resize(imageToTest, (28, 28), interpolation=cv2.INTER_AREA)
+    imageToTest = cv2.bitwise_not(imageToTest)
+    imageToTest = imageToTest.reshape(1, 784)
+    imageToTest = imageToTest.astype('float32')
+    imageToTest /= 255
 
     # Create a variable called feature_columns
     # Reshape the with a shape of 28x28 as this represents the pixel dimensions of our images
@@ -386,7 +389,32 @@ def PredictImage():
                         )
     print("\nCreated classifier....")
 
-    prediction = dnnClassifier.predict(input_fn=tf.estimator.inputs.numpy_input_fn(x=userImage, shuffle=False))
+    # Assign our prediction to a generator object called predictions, passing it in a specific image from our testing array of images
+    # Set shuffle to false to ensure we get the right image 
+    # https://www.tensorflow.org/api_docs/python/tf/estimator/Estimator#predict
+    predictions = dnnClassifier.predict(input_fn=imageToTest, shuffle=False)
+
+    # Loop through every element of our prediction object
+    for p in predictions:
+        # Extract just the probability variables from predictions
+        probList = (p['probabilities'])
+        
+        # Get the max value i.e the predicted digit from our list of probabilites
+        maxValue = max(probList)
+
+        # Print the predicted value to the screen
+        predictedValue = probList.argmax(axis=0)
+        # Round the array of probabilities to 2 decimal palces for easier reading
+        roundedArray = np.round(probList, decimals=2)
+
+        # Print our predictions
+        print("\n------------Prediction------------\n")
+        for i in range(0,10):
+            print ("Prediction of %i: %.3f" % (i,roundedArray[i]))           
+        
+        print("\nPrediction accuracy: {0:f}%\n".format(maxValue*100))
+        print("Predicted: ", predictedValue)
+
 
     
 # Function to download the MNIST dataset
@@ -403,21 +431,24 @@ while ans:
     print ("""
     ============ MNIST DATASET ============
     1. Download MNIST dataset via TensorFlow
-    2. Unzip and save images from MNIST test set
-    3. Run Linear Classification of MNIST dataset
-    4. Run Deep Neural Network Classification of MNIST dataset
-    5. Exit
+    2. Run Linear Classification of MNIST dataset
+    3. Run Deep Neural Network Classification of MNIST dataset
+    4. Unzip and save images from MNIST test set
+    5. Test an image from local storage
+    6. Exit
     """)
     ans=input("What would you like to do? ") 
     if ans=="1": 
       DownloadDataset()
     elif ans=="2":
-      ImageSaver()
-    elif ans=="3":
       LinearClassifier()
-    elif ans=="4":
+    elif ans=="3":
       DNNClassifier()
+    elif ans=="4":
+      ImageSaver()
     elif ans=="5":
+      PredictImage()
+    elif ans=="6":
       print("\n Exiting...")
       exit()
     elif ans !="":
