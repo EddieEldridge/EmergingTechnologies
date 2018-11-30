@@ -38,7 +38,8 @@ A jupyter notebook explaining how the above Python script works and discussing i
 Although Juptyer notebooks can be previewed on GitHub, I recommend you download these notebooks and run them locally as a lot of the code is reliant on generated local files and images.
 </b>
 
-.
+You can manually [download](http://yann.lecun.com/exdb/mnist/) the MNIST datasets and place them in the MNIST_data folder (create it if it doesn't exist) or you can use the <b>download</b> function of the script which will download and store the dataset for you.
+
 The following files are a mix of Python files and Jupyter notebook files.
 
 Python can be downloaded from [here](https://www.python.org/).
@@ -54,6 +55,9 @@ Simply navigate to the folder your just downloaded/cloned and run the following 
 `jupyter notebook`
 
 This will run a Juptyer notebook on your local machine in your default web browser.
+
+To open the Python script simply type 
+`python digit-recognition.py`
 
 If you get an error regarding a unknow modules/errors with import please ensure you have the correct Python library installed. For example, <b>Jupyter</b> is not installed by default with Python but can be installed with the command found above. Similarly, if TensorFlow can't be found, you can simply run the same command but replace jupyter with TensorFlow. Good luck!
 
