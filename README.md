@@ -34,6 +34,11 @@ A Python script that takes an image file containing a handwritten digit and iden
 A jupyter notebook explaining how the above Python script works and discussing its performance.
 
 # How to run the program
+<b>
+Although Juptyer notebooks can be previewed on GitHub, I recommend you download these notebooks and run them locally as a lot of the code is reliant on generated local files and images.
+</b>
+
+.
 The following files are a mix of Python files and Jupyter notebook files.
 
 Python can be downloaded from [here](https://www.python.org/).
