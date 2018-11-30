@@ -354,10 +354,10 @@ def PredictImage():
     imageToTest = cv2.imread("MNIST_images/"+predChoice)
 
     if(imageToTest is None):
-        print("Image not found.")
+        print("\nImage not found.")
         return
     else:
-        print("\nLoaded image successfully....\n")
+        print("\nLoaded image successfully....")
 
     # Process the image to conform to MNIST format
     imageToTest = cv2.cvtColor(imageToTest, cv2.COLOR_BGR2GRAY)
@@ -398,7 +398,6 @@ def PredictImage():
     for p in predictions:
         # Extract just the probability variables from predictions
         probList = (p['probabilities'])
-        print(probList)
         # Get the max value i.e the predicted digit from our list of probabilites
         maxValue = max(probList)
 
