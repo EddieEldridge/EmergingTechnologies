@@ -30,7 +30,13 @@ def LinearClassifier():
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets("MNIST_data")
-    print("\nLoaded MNIST successfully....\n")
+
+    # Check to see if the dataset was found correctly
+    if(mnist!=null):
+        print("\nLoaded MNIST successfully....\n")
+    else:
+        print("Please download the dataset first.")
+        return
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
@@ -151,7 +157,13 @@ def DNNClassifier():
 
     # Load the mnist dataset from TensorFlow
     mnist = input_data.read_data_sets('MNIST_data')
-    print("\nLoaded MNIST successfully....")
+    
+    # Check to see if the dataset was found correctly
+    if(mnist!=null):
+        print("\nLoaded MNIST successfully....\n")
+    else:
+        print("Please download the dataset first.")
+        return
 
     # Create a function to easily get our images and labels from the MNIST dataset
     def dataInput(dataset):
