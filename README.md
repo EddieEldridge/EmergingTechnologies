@@ -2,17 +2,15 @@
 ![emergingtech](https://user-images.githubusercontent.com/22448079/47147656-9f228f80-d2c6-11e8-846a-aa6a9a88ffef.png)
 
 <p align="center">
-  <b>A repository for the Emerging Technologies module's assignments. These assignments will be made with Python and Jupyter Notebook.</b><br>
+  <b>A repository for the Emerging Technologies assignments. These assignments will be made with Python and Jupyter Notebook.</b><br>
 </p>
 
 # Contents
 * [Description](#description)
 * [How to run](#how-to-run-the-program)
-* [Design](https://github.com/Store-Compare-Project/StoreCompare/wiki/Design-Document)
-* [Documentation](#documentation)
-* [Technologies](#technologies-and-software)
+* [Technologies](#technologies)
+* [Software](#software)
 * [Resources](#resources)
-* [Wiki](https://github.com/EddieEldridge/GoLangAutomaton/wiki)
 
 # Description
 This repository will consist of the following programs Python scripts and Jupyter notebooks.
@@ -52,7 +50,13 @@ Simply navigate to the folder your just downloaded/cloned and run the following 
 
 This will run a Juptyer notebook on your local machine in your default web browser.
 
-[Troubleshooting Juptyer Notebook](https://jupyter-notebook.readthedocs.io/en/stable/troubleshooting.html)
+If you get an error regarding a unknow modules/errors with import please ensure you have the correct Python library installed. For example, <b>Jupyter</b> is not installed by default with Python but can be installed with the command found above. Similarly, if TensorFlow can't be found, you can simply run the same command but replace jupyter with TensorFlow. Good luck!
+
+If you encounter any other problems please refer to this article. 
+
+* [Troubleshooting Juptyer Notebook](https://jupyter-notebook.readthedocs.io/en/stable/troubleshooting.html)
+* [Troubleshooting Python](https://www.studentrobotics.org/docs/troubleshooting/python)
+* [Setting up a Python enviroment](https://docs.python.org/3/library/venv.html)
 
 # Resources
 The following is a collection of all the resources I used to develop and write these notebooks/scripts.
@@ -104,9 +108,18 @@ The following is a collection of all the resources I used to develop and write t
 * [TensorFlow Optimizer Documentation](https://www.tensorflow.org/api_docs/python/tf/train/Optimizer)
 
 * [How to pick an optimizer and learning rate for a model](https://medium.com/octavian-ai/which-optimizer-and-learning-rate-should-i-use-for-deep-learning-5acb418f9b2)
-# Technologies
 
+# Technologies
+* [Git](https://git-scm.com/)
+* [TensorFlow](https://www.tensorflow.org/)
+* [Keras](https://keras.io/)
+* [Python 3.6](https://www.python.org/downloads/release/python-360/)
+* [Jupyter](https://jupyter.org/)
+
+# Software
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [Cmder](http://cmder.net/)
 
 # Developers
-[Eddie Eldridge](https://github.com/EddieEldridge)	
+* [Eddie Eldridge](https://github.com/EddieEldridge)	
 
